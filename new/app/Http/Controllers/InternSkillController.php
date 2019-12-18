@@ -32,7 +32,9 @@ class InternSkillController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50|string',   
+            
+            'intern_id' => 'required',
+            'skill_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -60,15 +62,7 @@ class InternSkillController extends Controller
      * @param  \App\InternSkill  $internSkill
      * @return \Illuminate\Http\Response
      */
-    public function show(InternSkill $internSkill)
-    {
-        $value=InternSkill::find($intSkill);
-
-        return response()->json([
-            'state' =>'sucess',
-            'description'=>$value
-        ]);
-    }
+  
 
    
 
@@ -82,7 +76,8 @@ class InternSkillController extends Controller
     public function update(Request $request, InternSkill $internSkill)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50|string',
+            'intern_id' => 'required',
+            'skill_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -92,7 +87,7 @@ class InternSkillController extends Controller
             ]);
 
         } else {    
-            $intSkill=InternSkill::find($intSkill->id);
+            $intSkill=InternSkill::find($internSkill->id);
             $intSkill->name = $request->input('name');
         }
         
@@ -112,7 +107,7 @@ class InternSkillController extends Controller
      */
     public function destroy(InternSkill $internSkill)
     {
-        $intSkills= InternSkill::find($intSkill);
+        $intSkill= InternSkill::find($internSkill);
         
         $intSkill->delete();
         return response()->json([

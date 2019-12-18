@@ -14,13 +14,15 @@ class CreateInternSkillsTable extends Migration
     public function up()
     {
         Schema::create('intern_skill', function (Blueprint $table) {
+            
+           
+            
             $table->unsignedBigInteger('intern_id');
             $table->foreign('intern_id')->references('id')->on('interns')->onDelete('cascade');
 
             $table->unsignedBigInteger('skill_id');
             $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
-
-            $table->timestamps();
+            $table->Timestamps();
         });
     }
 
