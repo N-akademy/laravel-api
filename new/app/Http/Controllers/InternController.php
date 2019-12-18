@@ -30,37 +30,37 @@ class InternController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'lastname' => 'required|max:50|string',
-            'firstname' => 'required|max:50|string',
-            'age' => 'required|integer',
-            'phone_number' => 'required|integer|max:10|unique:interns|',
-            'email' => 'required|email|unique:interns|'
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'age' => 'required|integer|max:255',
+            'phone_number' => 'required|unique:interns|max:255',
+            'email' => 'required|email|unique:interns|max:255'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'state' =>'error',
-                'message' => $validator->error()
+                'state' => 'error',
+                'message' => $validator->errors()
             ]);
-
         } else {
-            // On se crée un objet de type Movie qui utilisera l'hydratation
             $intern = new Intern([
-                'lastname'=>$request->lastname,
-                'firstname'=>$request->firstname,
-                'age'=>$request->age,
-                'phone_number'=>$request->phone_number,
-                'email'=>$request->email,
+                'lastname' => $request->lastname,
+                'firstname' => $request->firstname,
+                'age' => $request->age,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email
+            ]);
+    
+            $intern->save();
+    
+            return response()->json([
+                'state' => 'success',
+                'message' => 'Apprenant créé !'
             ]);
         }
-
-        $intern->save();
-
-        return response()->json([
-            'state'=>'sucess',
-            'message'=>'Cet apprenant a été crée.'
-        ]);
     }
+
+       
 
     /**
      * Display the specified resource.
@@ -106,8 +106,6 @@ class InternController extends Controller
             ]);
 
         } else {
-            // On se crée un objet de type Movie qui utilisera l'hydratation
-           
             $int=Intern::find($id);
             $int->lastname = $request->input('lastname');
             $int->firstname = $request->input('firstname');

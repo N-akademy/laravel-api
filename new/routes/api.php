@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::apiResource('interns','InternController');
-
+Route::apiResource('skills','SkillController');
+Route::apiResource('internskill','InternSkillController');
